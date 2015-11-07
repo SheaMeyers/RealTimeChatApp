@@ -9,8 +9,11 @@ angular.module('angularfireSlackApp')
 		channelsCtrl.users = Users.all;
 
 		channelsCtrl.logout = function(){
-			Auth.$unauth();
-			$state.go('home');
+			channelsCtrl.profile.online = null;
+			channelsCtrl.profile.$save().then(function() {
+				Auth.$unauth();
+				$state.go('home');
+			});
 		};
 
 		channelsCtrl.createChannel = function(){
@@ -20,4 +23,14 @@ angular.module('angularfireSlackApp')
 				};
 			});
 		};
+
+		channels.logout = function() {
+			channelsCtrl.profile.online = null;
+			channelsCtrl.profile.$save().then(function(){
+				Auth.$unauth();
+				$state.go('home');
+			});
+		};
+
+		Users.setOnline(profile.$id);
 	});
