@@ -16,15 +16,17 @@ angular.module('angularfireSlackApp')
 			});
 		};
 
-		channelsCtrl.createChannel = function(){
-			channelsCtrl.channels.$add(channelsCtrl.newChannel).then(function(){
-				channelsCtrl.newChannel = {
-					name: ''
-				};
-			});
+		channelsCtrl.newChannel = {
+		  name: ''
 		};
 
-		channels.logout = function() {
+		channelsCtrl.createChannel = function(){
+		  channelsCtrl.channels.$add(channelsCtrl.newChannel).then(function(ref){
+		    $state.go('channels.messages', {channelId: ref.key()});
+		  });
+		};
+
+		channelsCtrl.logout = function() {
 			channelsCtrl.profile.online = null;
 			channelsCtrl.profile.$save().then(function(){
 				Auth.$unauth();

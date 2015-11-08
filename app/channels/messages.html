@@ -7,7 +7,7 @@
 	<div class="message-info">
 		<div class="user-name">
 			{{ channelsCtrl.getDisplayName(message.uid) }}
-			<span class="timestamp"{{ message.timestamp | date:"short" }}></span>
+			<span class="timestamp">{{ message.timestamp | date:"short" }}</span>
 		</div>
 		<div class="message">
 			{{ message.body }}

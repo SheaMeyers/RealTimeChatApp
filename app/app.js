@@ -20,7 +20,7 @@ angular
         url: '/',
         templateUrl: 'home/home.html',
 
-        resolve:{
+        resolve: {
           requireNoAuth: function($state, Auth){
             return Auth.$requireAuth().then(function(auth){
               $state.go('channels');
@@ -64,7 +64,7 @@ angular
         url: '/profile',
         controller: 'ProfileCtrl as profileCtrl',
         templateUrl: 'users/profile.html',
-        
+
         resolve: {
           auth: function($state, Users, Auth){
             return Auth.$requireAuth().catch(function(){
@@ -84,12 +84,12 @@ angular
         templateUrl: 'channels/index.html',
 
         resolve: {
-          channels: function(Channels){
+          channels: function (Channels){
             return Channels.$loaded();
           },
-          profile: function($state, Auth, Users){
-            return Auth.$requireAuth.then(function(auth){
-              return Users.getProfile(auth.uid).$loaded().then(function(profile){
+          profile: function ($state, Auth, Users){
+            return Auth.$requireAuth().then(function(auth){
+              return Users.getProfile(auth.uid).$loaded().then(function (profile){
                 if(profile.displayName){
                   return profile;
                 } else {
@@ -130,9 +130,9 @@ angular
             return Messages.forUsers($stateParams.uid, profile.$id).$loaded();
           },
           channelName: function($stateParams, Users){
-            return Users.all.$loaded().then(function() {
+            return Users.all.$loaded().then(function(){
               return '@'+Users.getDisplayName($stateParams.uid);
-            })
+            });
           }
         }
       });
