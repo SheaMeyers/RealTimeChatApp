@@ -12,7 +12,6 @@ angular.module('angularfireSlackApp')
                 $state.go('channels');
             }, function(error) {
                 authCtrl.error = error;
-                console.log('login ' + error);
             });
         };
 
@@ -21,7 +20,6 @@ angular.module('angularfireSlackApp')
                 authCtrl.login();
             }, function(error) {
                 authCtrl.error = error;
-                console.log('register ' + error);
             });
         };
     });

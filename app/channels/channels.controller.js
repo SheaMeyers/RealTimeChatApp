@@ -1,12 +1,17 @@
 angular.module('angularfireSlackApp')
-    .controller('ChannelsCtrl', function($state, Auth, Users, profile, channels) {
+    .controller('ChannelsCtrl', function($state, Auth, Users, Channels) {
         var channelsCtrl = this;
 
-        channelsCtrl.profile = profile;
-        channelsCtrl.channels = channels;
-        channelsCtrl.getDisplayName = Users.getDisplayName;
-        channelsCtrl.getGravatar = Users.getGravatar;
-        channelsCtrl.users = Users.all;
+        Auth.$requireAuth().then(function(auth){
+            channelsCtrl.profile = Users.getProfile(auth.uid);
+            channelsCtrl.getDisplayName = Users.getDisplayName(auth.uid);
+            channelsCtrl.getGravatar = Users.getGravatar(auth.uid);
+            channelsCtrl.users = Users.all;
+
+            Users.setOnline(profile.$id);
+        });
+        
+        channelsCtrl.channels = Channels;
 
         channelsCtrl.logout = function() {
             channelsCtrl.profile.online = null;
@@ -27,6 +32,4 @@ angular.module('angularfireSlackApp')
                 });
             });
         };
-
-        Users.setOnline(profile.$id);
     });
