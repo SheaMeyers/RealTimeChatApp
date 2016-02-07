@@ -9,9 +9,10 @@ angular.module('angularfireSlackApp')
 
         authCtrl.login = function() {
             Auth.$authWithPassword(authCtrl.user).then(function(auth) {
-                $state.go('home');
+                $state.go('channels');
             }, function(error) {
                 authCtrl.error = error;
+                console.log('login ' + error);
             });
         };
 
@@ -20,6 +21,7 @@ angular.module('angularfireSlackApp')
                 authCtrl.login();
             }, function(error) {
                 authCtrl.error = error;
+                console.log('register ' + error);
             });
         };
     });
