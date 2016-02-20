@@ -1,10 +1,16 @@
 angular.module('angularfireSlackApp')
-    .controller('MessagesCtrl', function(profile, channelName, messages) {
+    .controller('MessagesCtrl', function(channelName, Messages) {
         var messagesCtrl = this;
 
-        messagesCtrl.messages = messages;
+        messagesCtrl.messages = Messages;
         messagesCtrl.channelName = channelName;
         messagesCtrl.message = '';
+
+        var profile = undefined;
+
+        Auth.$requireAuth().then(function(auth){
+            profile = Users.getProfile(auth.uid);
+        });
 
         messagesCtrl.sendMessage = function() {
             if (messagesCtrl.message.length > 0) {

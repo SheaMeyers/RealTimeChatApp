@@ -8,7 +8,7 @@ angular.module('angularfireSlackApp')
             channelsCtrl.getGravatar = Users.getGravatar(auth.uid);
             channelsCtrl.users = Users.all;
 
-            Users.setOnline(profile.$id);
+            Users.setOnline(channelsCtrl.profile.$id);
         });
         
         channelsCtrl.channels = Channels;
